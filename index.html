@@ -1,38 +1,37 @@
 ﻿<body id=b>
 <script>
-maps = [
+m=[
 "000000000000000000000100001100001110001100000000",
 "000000000000000000011000011100011110011110000000"
 ];
+l=0;
 
-level=0;
+s=[[1,2]];
 
-snake=[[1,2]];
+c=(i,j)=>s.some(k=>k[0]==i&&k[1]==j)
 
-collide=(i,j)=>snake.some(k=>k[0]==i&&k[1]==j)
-
-draw=won=>{
+d=won=>{
   b.innerHTML='';
   for(i=0;i<8;i++){
     for(j=0;j<6;j++){
-      color=+maps[level][i*6+j];
-      if(collide(i,j)){
+      var color=+m[l][i*6+j];
+      if(c(i,j)){
         color=2;
       }
-      b.innerHTML+="<center style='width:2em;height:2em;border:1px solid;float:left;background:"+(["#000","#fff",won?"#0f0":"tan"][color])+";"+(j==0?"clear:both":"")+"'>" + ((color == 2 && i==snake[snake.length-1][0]&&j==snake[snake.length-1][1])?"👀":"")
+      b.innerHTML+="<center style='width:2em;height:2em;border:1px solid;float:left;background:"+(["#000","#fff",won?"#0f0":"tan"][color])+";"+(j==0?"clear:both":"")+"'>"+((color==2&&i==s[s.length-1][0]&&j==s[s.length-1][1])?"👀":"")
     }
   }
 }
-draw(0);
+d(0);
 
 move=(dir,i,j)=>{
-  [i,j]=snake[snake.length-1];
-  collide(i-=--dir%2,j+=--dir%2)||snake.push([i,j]);
-  snake=snake.slice(snake.length>[8,13][level])
-  draw();
-  if(snake.every(k=>+maps[level][6*k[0]+k[1]])){
-    draw(1);
-    setTimeout("level++;snake=[[1,2]];draw()",999);
+  [i,j]=s[s.length-1];
+  c(i-=--dir%2,j+=--dir%2)||s.push([i,j]);
+  s=s.slice(s.length>[8,13][l])
+  d();
+  if(s.every(k=>+m[l][6*k[0]+k[1]])){
+    d(1);
+    setTimeout("l++;s=[[1,2]];d()",999);
   }
 }
 
