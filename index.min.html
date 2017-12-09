@@ -1,5 +1,5 @@
 ﻿<body onload='m=p=>p%20>7&&p%20<12&&[1647,1247,3443,887,1020,3828,60147,157303,4031,9983,3967,28664,65395,481111,227187,192252,227159,60414][l]>>(~~(p/20)*4-12)+(p%20-8)&1
-onkeyup=d=e=>{e?s.includes(p=s[0]+[20,-1,-20,1][e.which%4])||s.unshift(p):0
+onkeydown=d=e=>{e?s.includes(p=s[0]+[20,-1,-20,1][e.which%4])||s.unshift(p):0
 s=s.slice(0,l<6?8:l<12?11:13)
 w=s.every(m)&&setTimeout("s=[30,10];l++;d()",999)
 for(B="<button onclick=s=[30,10];d()>Reset<button onclick=s=[30,10];l++;d()>Next</button><p>",i=0;i<200;i++)b.innerHTML=B+=`<x style=width:22px;height:25px;float:left;background:#${s.includes(i)?w?"ff0":"da6":m(i)?"fff;outline:solid+1px":"498"}${i%20?"":";clear:both"}>${i-s[0]?"":"👀"}</x>`}
