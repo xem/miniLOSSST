@@ -2,19 +2,17 @@
 <script>
 m=p=>p<16?0:[1098636,6408094][l]>>41-p&1;
 l=0;
-s=[[1,2]];
-c=(i,j)=>s.some(k=>k[0]==i&&k[1]==j)
+s=[8];
 d=w=>{
 b.innerHTML='';
-for(i=0;i<8;i++)
-for(j=0;j<6;j++)
-c(i,j)?z=2:z=+m(i*6+j),b.innerHTML+=`<x style='width:22px;height:25px;border:1px solid;float:left;background:#${["000","fff",w?"0f0":"da6"][z]}${j?"":";clear:both"}'>`+["","👀"][+(z==2&&i==s[s.length-1][0]&&j==s[s.length-1][1])];
+for(i=0;i<48;i++)
+s.includes(i)?z=2:z=+m(i),b.innerHTML+=`<x style='width:22px;height:25px;border:1px solid;float:left;background:#${["000","fff",w?"0f0":"da6"][z]}${i%6?"":";clear:both"}'>`+["","👀"][+(z==2&&i==s[s.length-1])];
 }
 d(0);
 onkeyup=e=>(e=e.which)-37>>2||(
-[i,j]=s[s.length-1],
-c(i-=(dir=e%4-1)%2,j+=--dir%2)||s.push([i,j]),
+p=s[s.length-1],
+s.includes(p+=-((D=e%4-1)%2)*6+(--D%2))||s.push(p),
 s=s.slice(s.length>[8,13][l]),
-d(s.every(k=>+m([6*k[0]+k[1]]))&&setTimeout("l++;s=[[1,2]];d()",999))
+d(s.every(k=>+m(k))&&setTimeout("l++;s=[8];d()",999))
 )
 </script>
