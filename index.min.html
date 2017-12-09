@@ -2,5 +2,5 @@
 onkeyup=d=e=>{k=e.which;k?s.includes(q=p+[20,-1,-20,1][k%4])||s.unshift(p=q):s=[p=30,10]
 s=s.slice(0,l<6?8:l<12?11:13)
 w=s.every(m)&&setTimeout("d(++l)",999)
-for(B="<button onclick=d(0)>Reset<button onclick=d(++l)>Next</button><p style=width:60ch>",i=0;i<200;i++)b.innerHTML=B+=`<x style=width:3ch;height:3ch;float:left;background:#${s.includes(i)?w?"ff0":"da6":m(i)?"fff;outline:solid+1px":498}>${i-p?"":"👀"}</x>`}
-d(l=0)'id=b>
+for(B=i="";i<200;i++)b.innerHTML=B+=`<x style=width:3ch;height:3ch;float:left;background:#${s.includes(i)?w?"ff0":"da6":m(i)?"fff;outline:solid+1px":498}>${i-p?"":"👀"}</x>`}
+d(l=0)'><button onclick=d(0)>Reset<button onclick=d(++l)>Next</button><p style=width:60ch id=b>
