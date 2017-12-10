@@ -1,6 +1,6 @@
-﻿<body onload='m=p=>(n=p%20)>7&&n<12&&[..."ٯӟ൳ͷϼ໴𦙷྿⛿ཿ濸ｳ񵝗𷝳𮻼𷝗"][l].codePointAt()>>(p/20<<2)+n-20&1
-onkeyup=d=e=>{k=e.which;k==82&&d(0);k==32&&d(++l);k?s.includes(q=p+[20,-1,-20,1][k%4])||s.unshift(p=q):s=[p=81,80]
+﻿<body onload='m=p=>(n=p%16)>5&n<10&[..."ٯӟ൳ͷϼ໴𦙷྿⛿ཿ濸ｳ񵝗𷝳𮻼𷝗"][l].codePointAt()>>(p/4&~3)+n-18&1
+onkeyup=d=e=>{k=e.which;k==82&&d(0);k==32&&d(++l);s=k?s.includes(q=p+[16,-1,-16,1][k%4])?s:[p=q,...s]:[p=65,64]
 s=s.slice(0,l<6?8:l<12?11:13)
 w=s.every(m)&&setTimeout("d(++l)",999)
-for(B=i="";i<200;)b.innerHTML=B+=`<x style=width:3ch;height:3ch;float:left;background:#${s.includes(i)?w?"ff0":"da6":m(i)?"":498}>${i++-p?"":"👀"}</x>`}
-d(l=0)'style=width:60ch id=b>
+for(B=i="";i<160;)b.innerHTML=B+=`<dt style=width:3ch;height:3ch;float:left;background:#${s.includes(i)?w?"ff0":"da6":!m(i)*498}>${i++-p?"":"👀"}`}
+d(l=0)'style=width:48ch id=b>
