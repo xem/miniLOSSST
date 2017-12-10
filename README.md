@@ -3,7 +3,7 @@ MiniLOSSST
 
 A super tiny demake of [LOSSST](http://js13kgames.com/entries/lossst) (my js13kgames 2017 entry)
 
-Golfed in <512b by **[xem](https://twitter.com/MaximeEuziere), [xen](https://twitter.com/Xen_the), xaotic, [veubeke](https://twitter.com/I_like_too_much), [corruptio](https://twitter.com/justecorruptio), [p01](https://twitter.com/p01) ** <3
+Golfed in <512b by [xem](https://twitter.com/MaximeEuziere), [xen](https://twitter.com/Xen_the), xaotic, [veubeke](https://twitter.com/I_like_too_much), [corruptio](https://twitter.com/justecorruptio) & [p01](https://twitter.com/p01) <3
 
 Featuring 25 puzzles!
 
