@@ -1,17 +1,23 @@
 ﻿<body onload='
 
-// LOSSST demake
-// =============
+// LOSSST 1kb demake
+// =================
+
+// Move the snake using arrow keys, reset with R, skip with space.
+// Match the white pattern to solve each puzzle.
+// Puzzles 18+ use wrapping (to show it, the puzzle gets a black background)
 
 // The scene is made of 20x10 squares, counted with `p` (0 to 200).
-// Current level number (1-23) is stored in `l`.
-// Snake squares coordinates are stored in `s`. (s[0] is the head)
-// Arrow keys are used to move the snake.
-// If the white pattern is matched, the snake gets green for one second, and the next level starts.
+// Current puzzle number (0-40?) is stored in `l`.
+// Snake squares coordinates are stored in `s` (s[0] is the head, etc).
+// Snake length depends on the levels (8,11,13,14,15,16).
+// When the white pattern is matched, the snake gets yellow for one second, and the next level starts.
 
-// Map:
-// m(p) considers the 4x6 squares at the center of the scene and associates 1 or 0 to each of them, based on the bits of numbers representing each puzzle.
-m=p=>p%20>7&&p%20<12&&[1647,1247,3443,887,1020,3828,60147,157303,4031,9983,3967,28664,65395,481111,227187,192252,227159,60414][l]>>(~~(p/20)*4-12)+(p%20-8)&1;
+// The puzzles are contained in 4x4 5x5, 6x6 or 7x7 squares, at the center of the scene.
+// Each puzzle is encoded in the bits of a number (0 : green / 1 : white).
+
+// The function m(p) contains all the puzzles, and tells if the current square (p) is green or white.
+m=p=>p%20>7&&p%20<12&&(~~(p/20)*4-12)+(p%20-8);
 
 // Draw / onkeyup:
 onkeydown=d=e=>{
@@ -43,7 +49,7 @@ i%20?"":";clear:both"
 }>${
 
 // Emoji eyes are added in the first square of the snake.
-i-s[0]?"":"👀"
+i-s[0]?m(i):"👀"
 }</x>`
 }
 
