@@ -1,0 +1,53 @@
+﻿<body onload='
+
+// LOSSST demake
+// =============
+
+// The scene is made of 20x10 squares, counted with `p` (0 to 200).
+// Current level number (1-23) is stored in `l`.
+// Snake squares coordinates are stored in `s`. (s[0] is the head)
+// Arrow keys are used to move the snake.
+// If the white pattern is matched, the snake gets green for one second, and the next level starts.
+
+// Map:
+// m(p) considers the 4x6 squares at the center of the scene and associates 1 or 0 to each of them, based on the bits of numbers representing each puzzle.
+m=p=>p%20>7&&p%20<12&&[1647,1247,3443,887,1020,3828,60147,157303,4031,9983,3967,28664,65395,481111,227187,192252,227159,60414][l]>>(~~(p/20)*4-12)+(p%20-8)&1;
+
+// Draw / onkeyup:
+onkeydown=d=e=>{
+
+// If a key is pressed (e is not null), check if the snake can move down/left/up/right (e.which%4).
+// If it doesn t collide with itself, insert the new head position at the beginning of s.
+e?s.includes(p=s[0]+[20,-1,-20,1][e.which%4])||s.unshift(p):0;
+
+// Cut the snake after a certain max length (8/13/... depending on the puzzles).
+s=s.slice(0,l<6?8:l<12?11:13);
+
+// If all the snake cubes match with all the white squares, game is won (w=1).
+// Go to next level and reset snake after 1 second.
+w=s.every(m)&&setTimeout("l++;s=[30,10];d()",999);
+
+// Draw the scene (48 elements added in the body b using th string B).
+for(B="<button onclick=s=[30,10];d()>Reset<button onclick=s=[30,10];l++;d()>Next</button><p>",i=0;i<200;i++)
+b.innerHTML=B+=`<x style=width:22px;height:24px;float:left;background:#${
+
+// Snake squares are colored in tan or green (if the level is won).
+// Puzzle squares are colored in black and white.
+s.includes(i)?w?"ff0":"da6":
+
+m(i)?"fff;outline:solid+1px":"498"
+}${
+
+// Break line after each line of 6 puzzles.
+i%20?"":";clear:both"
+}>${
+
+// Emoji eyes are added in the first square of the snake.
+i-s[0]?"":"👀"
+}</x>`
+}
+
+// Reset snake, start the game
+s=[30,10];d(l=0)
+
+'id=b>
