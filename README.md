@@ -11,7 +11,8 @@ Goal: try to match each pattern.
 
 Controls: arrow keys = move / R = reset.
 
-###Demo(s)
+Demo(s)
+====
 
 - Colored version (512b): http://xem.github.io/miniLOSSST
 
