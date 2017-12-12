@@ -7,49 +7,55 @@
 // The game is rendered on a grid of 16x10 squares.
 // The squares are <a> elements measuring 3ch x 3ch and floating to the left.
 // The size "3ch" was chosen because it is a good size to contain the emoji eyes, and shorter than "24px".
-// The <a> elements were chosen because they can't contain other <a> elements, so "<a><a><a>..." will actually produce many consecutive blocks.
-// The body's width is set to 48ch, to wrap adter each line of 16 squares.
+// The <a> elements were chosen because they can't contain other <a> elements,
+// so "<a><a><a>..." will actually produce many consecutive blocks.
+// The body's width is set to 48ch, to wrap after each line of 16 squares.
 // The game contains 25 puzzles, counted with the variable `l`.
-// The function `d` is called on load and at every keydown event
+// The function `d` is called on load and at every keydown event.
 // If its parameter `e` is set, it means that a direction key was pressed, and the snake will move accordingly.
 // Then the scene will be redrawn.
 
 onkeydown = d = e => {
 
-  // When a key is pressed, k contains the current keyCode, modulo 36 (otherwise, it's just NaN)
+  // When a key is pressed, k contains the current keyCode, modulo 36 (otherwise, it's just NaN).
   k = e.which % 36;
   
   // `s` is an array containing the position of each square of the snake, from head to tail.
-  // If k < 5 (if an arrow key is pressed)
+  // If k < 5 (if an arrow key is pressed).
   s = k < 5
   
     // `p` contains the current position of the snake, and `q` the next one:
-    // left: k == 1, q = p - 1
-    // up: k == 2; q = p - 16
-    // right: k == 3; q = p + 1
-    // down: k == 4; q = p + 16
+    // left: k == 1, q = p - 1.
+    // up: k == 2; q = p - 16.
+    // right: k == 3; q = p + 1.
+    // down: k == 4; q = p + 16.
     ? s.includes(q = p + [, -1, -16, 1, 16][k])
     
       // If the snake already contains `q`, that's a collision, so the snake doesn't move, and `s` stays the same.
       ? s
       
-      // Else, `s` is built using the new head position, which is copied in `p`, plus the previous value of `s`)
+      // Else, `s` is built using the new head position, which is copied in `p`, plus the previous value of `s`).
       : [p = q, ...s]
   
-      // If k > 5 or k is NaN, the snake is reset to its initial position (on the left of the scene)
+      // If k > 5 or k is NaN, the snake is reset to its initial position (on the left of the scene).
       : [p = 65, 64];
   
   // `s` is truncated after a certain length, depending on the current puzzle:
-  // puzzles 0 - 5: size 8
-  // puzzles 6 - 11: size 11
-  // puzzles 12 - 20: size 13
-  // puzzles 20 - 25: size 15
+  // puzzles 0 - 5: size 8.
+  // puzzles 6 - 11: size 11.
+  // puzzles 12 - 20: size 13.
+  // puzzles 20 - 25: size 15.
   s.length = l < 6 ? 8 : l < 12 ? 11 : l < 21 ? 13 : 15;
   
-  // `w` is set to 1 is the current puzzle is won, 0 otherwise.
+  // `w` is set to 1 if the current puzzle is won, 0 otherwise.
   // To check if the puzzle is solved, all the values of `s` are checked using the function `m`
-  // The function `m`, used to draw the puzzles and check if the puzzles are solved, takes a cell number as parameter (0-160), then does a many operations to extract each puzzle from the bits of an Unicode character's code point, and offsets all the squares coordinates in order to draw the puzzle in the middle of the scene, on a 4x6 area.
-  // All the puzzles are encoded in less than 4x6=24 bits, so their binary representation fit in a single character, taking 3 to 4 bytes each in UTF-8.
+  // The function `m`, used to draw the puzzles and check if the puzzles are solved, takes a cell number as parameter (0-160),
+  // then does many operations to extract each puzzle from the bits of an Unicode character's code point,
+  // and offsets all the squares coordinates in order to draw the puzzle in the middle of the scene, on a 4x6 area.
+  // (can't explain more than that, it's "code voodoo").
+  // All the puzzles are encoded in less than 4x6=24 bits, so their binary representations fit in a single character,
+  // taking 3 to 4 bytes each in UTF-8.
+  // Level 26 is represented by \0 to have an empty scene at the end instead of a JS error.
   w = s.every(
     m = p => (n = p % 16) > 5 & n < 10 & [..."ٯӟ൳ͷϼ໴𦙷࿟⛿ཿ濸ｳ񵝗𷝳𮻼𷝗𿹦򌻷򏿨򿦟񯽗𷿮񿧳\0"][l].codePointAt() >> (p / 4 & ~3) + n - 18 & 1
   )
@@ -58,11 +64,11 @@ onkeydown = d = e => {
   && setTimeout("d(++l)", 500);
   
   // Draw the scene:
-  // Reset the string `B` containing the body's innerHTML, and `i` (the square counter)
+  // Reset the string `B` containing the body's innerHTML, and `i` (the square counter).
   // Then, loop 160 times
   for(B = i = ""; i < 160;){
     
-    // Update `B` and b.innerHTML with the prebious value of `B` plus a new <a> element.
+    // Update `B` and b.innerHTML with the previous value of `B` plus a new <a> element.
     // As said earlier, this element is 3ch x 3ch and floating left, but it also has a background set to:
     // #792 (green) if the current cell belongs to the snake and the puzzle is won.
     // #d&6 (tan) if it's a snake square and the puzzle is not won yet.
@@ -76,7 +82,8 @@ onkeydown = d = e => {
       : !m(i) * 359
     }>${
     
-      // Finally, the current square will contain emoji eyes if it's difference with `p` (the snake head) is 0, and nothing otherwise; and i gets incremented for the next loop.
+      // Finally, the current square will contain emoji eyes if it's difference with `p` (the snake head) is 0,
+      //and nothing otherwise; and `i` gets incremented for the next loop.
       i++ - p ? "" : "👀"
     }`
   }
@@ -84,4 +91,5 @@ onkeydown = d = e => {
 
 // Initialize the game with the level 0.
 d(l = 0)
+
 </script>
