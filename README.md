@@ -14,9 +14,9 @@ Controls: arrow keys = move / R = reset.
 Demo(s)
 ===
 
-- Colored version (512b): http://xem.github.io/miniLOSSST
+- Colored version (501b): http://xem.github.io/miniLOSSST
 
-- ASCII version (440b, by p01): http://xem.github.io/miniLOSSST/ascii.html
+- ASCII version (436b, by p01): http://xem.github.io/miniLOSSST/ascii.html
 
 Source code
 ===========
@@ -29,6 +29,11 @@ Source code
 +=`<dt style=width:3ch;height:3ch;float:left;background:#${s.includes(i)?w?792:"
 da6":!m(i)*359}>${i++-p?"":"👀"}`};d(l=0)'style=width:48ch id=b>
 ````
+
+Commented source code
+=====================
+
+https://github.com/xem/miniLOSSST/blob/gh-pages/commented.html
 
 Our other code golfed projects
 ===
