@@ -3,37 +3,31 @@ MiniLOSSST
 
 A super tiny demake of [LOSSST](http://js13kgames.com/entries/lossst) (my js13kgames 2017 entry)
 
-Golfed in <512b by [xem](https://twitter.com/MaximeEuziere), [xen](https://twitter.com/Xen_the), xaotic, [veubeke](https://twitter.com/I_like_too_much), [corruptio](https://twitter.com/justecorruptio) & [p01](https://twitter.com/p01) <3
+Golfed by [xem](https://twitter.com/MaximeEuziere), [xen](https://twitter.com/Xen_the), xaotic, [veubeke](https://twitter.com/I_like_too_much), [corruptio](https://twitter.com/justecorruptio) & [p01](https://twitter.com/p01) <3
 
-Featuring 25 puzzles!
+Featuring 2 x 25 challenging puzzles!
 
-Goal: try to match each pattern.
+Goal: try to match the black patterns.
 
-Controls: arrow keys = move / R = reset.
+Controls: arrow keys to move / R to reset.
 
-Demo(s)
+Demos
 ===
 
-- Colored version (501b): http://xem.github.io/miniLOSSST
+- 2D puzzles (527b): http://xem.github.io/miniLOSSST
 
-- ASCII version (436b, by p01): http://xem.github.io/miniLOSSST/ascii.html
-
-Source code
-===========
-
-````
-<body onload='m=p=>(n=p%16)>5&n<10&[..."ٯӟ൳ͷϼ໴𦙷࿟⛿ཿ濸ｳ񵝗𷝳𮻼𷝗𿹦򌻷򏿨򿦟񯽗𷿮񿧳\0"
-][l].codePointAt()>>(p/4&~3)+n-18&1;onkeydown=d=e=>{k=e.which%36;k>4&&d(0);s=k?s
-.includes(q=p+[,-1,-16,1,16][k])?s:[p=q,...s]:[p=65,64];s.length=l<6?8:l<12?11:l
-<21?13:15;w=s.every(m)&&setTimeout("d(++l)",999);for(B=i="";i<160;)b.innerHTML=B
-+=`<dt style=width:3ch;height:3ch;float:left;background:#${s.includes(i)?w?792:"
-da6":!m(i)*359}>${i++-p?"":"👀"}`};d(l=0)'style=width:48ch id=b>
-````
+- 2D puzzles with wrap (786b): http://xem.github.io/miniLOSSST/wrap.html
 
 Commented source code
 =====================
 
-https://github.com/xem/miniLOSSST/blob/gh-pages/commented.html
+- 2D: https://github.com/xem/miniLOSSST/blob/gh-pages/commented.html
+- 2D with wrap: https://github.com/xem/miniLOSSST/blob/gh-pages/wrap-commented.html
+
+Other:
+
+- 2D puzzles (rendered in ASCII, 436b, by p01): http://xem.github.io/miniLOSSST/ascii.html
+
 
 Our other code golfed projects
 ===
