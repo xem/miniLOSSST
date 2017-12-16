@@ -22,9 +22,11 @@ Commented source code
 =====================
 
 - 2D: https://github.com/xem/miniLOSSST/blob/gh-pages/commented.html
+
 - 2D with wrap: https://github.com/xem/miniLOSSST/blob/gh-pages/wrap-commented.html
 
-Other:
+Other versions:
+===
 
 - 2D puzzles (rendered in ASCII, 436b, by p01): http://xem.github.io/miniLOSSST/ascii.html
 
