@@ -1,84 +1,88 @@
 ﻿<body style=width:48ch id=b>
 <script>
-onkeydown=d=e=>{
+onkeydown = d = e => {
 
 // Don't move when the snake is green
 if(!w){
 
+// Type of puzzle: wrap = 0 / nowrap = 1
+f = l < 25;
+
 // Puzzle size (non-wrap: 25*4, wrap: 7,5,7,6,6,12*5,6*6,0)
-z=l<25?4:l<30?+"75766"[l-25]:l<43?5:l<50?6:0;
+z = l < 25 ? 4 : l < 30 ? +"75766" [l - 25] : l < 43 ? 5 : l < 50 ? 6 : 0;
 
 // Read keyCode
-k=e.which%36;
+k = e.which % 36;
 
-// Space to skip (debug)
-if(k==32){w=n=0;d(++l)}
+// Shift to skip a level
+k == 16 && d(++l, w = n = 0)
 
 // Move / reset snake
-k<5?
+k < 5 ?
 (  
   // Target square
-  q=p+[,-1,-16,1,16][k],
+  q = p +[, -1, -16, 1, 16][k],
   
   // Wrap for puzzles 24 to 49 if the snake head is already inbounds
-  l>25&&n&&m(q)==2&&(q+=[,z,16*z,-z,-16*z][k]),
+  q += !f && n && m(q) > 1 ? [, z, 16 * z, -z, -16 * z][k] : 0,
   
   // Go inbounds
-  m(q)<2&&(n=1),
+  m(q) < 2 && (n = 1),
   
   // Move snake if no collision 
-  s.includes(q)||(s=[p=q,...s]) 
+  s.includes(q) || (s = [p = q, ...s]) 
 )
 
 
 // Other keys: reset
-:(n=0,s=[p=65,64])
+:(n = 0, s = [p = 81, 80])
 
 // Truncate snake (non-wrap: 6*8, 6*11, 9*13, 6*15; wrap: 5*14, 13*15, 4*20, 3*20
-s.length=l<6?8:l<12?11:l<21?13:l<25?15:l<30?14:l<43?15:l<47?16:20
+s.length=l < 6 ? 8 : l < 12 ? 11 : l < 21 ? 13 : f ? 15 : l < 30 ? 14 : l < 43 ? 15 : l < 47 ? 16 : 20
 
 // Color of the current cell (0:pattern / 1:wrap area (for puzzles 25-49) / 2:exterior)
-m=p=>{
-  x=p%16;
-  y=p>>4;
-  t=8-~~(z/2);
-  u=5-~~(z/2);
-  return x<t||x>t+z-1||y<u||y>u+z+(l<25?2:-1)
-  ?2
-  :(
-  1-(
+m = p => {
+  
+  // Compute cell coordinates
+  x = p % 16;
+  y = p >> 4;
+  
+  // Compute distance from center based on the size of the current puzzle
+  t = 8 - z / 2 | 0
+  
+  // Return 0/1/2 according to x, y, f and l
+  return x < t || x > t + z - 1 || y < t - 2 || y > t + z - (f ? 1 : 3)
+  
+  ? 2
+  
+  :
+  
+  (
+    1 - 
+    (
       (
-      
-        l<25
-        ?
-        [..."ٯӟ൳ͷϼ໴𦙷࿟⛿ཿ濸ｳ񵝗𷝳𮻼𷝗𿹦򌻷򏿨򿦟񯽗𷿮񿧳\0"][l].codePointAt()
-        :
-        parseInt(
-          "1hrdfddq8y,g3t6b,2tc09uicht,1ibkfyb,pesw8s3,9jorj,j7r6m,jio5o,fv5kd,jokrj,jdyrj,b2lvj,b1asx,jopxb,9luxq,d8473,jnejl,jrkbh,e03aae4,427yw3s,im7v7p,ofbd9ip,46nskug,p2yhnzn,ofaqrjz,0".split(",")[l-25],36
+        f
+        ? [..."ٯӟ൳ͷϼ໴𦙷࿟⛿ཿ濸ｳ񵝗𷝳𮻼𷝗𿹦򌻷򏿨򿦟񯽗𷿮񿧳"][l].codePointAt()
+        : parseInt(
+          "1hrdfddq8y,g3t6b,2tc09uicht,1ibkfyb,pesw8s3,9jorj,j7r6m,jio5o,fv5kd,jokrj,jdyrj,b2lvj,b1asx,jopxb,9luxq,d8473,jnejl,jrkbh,e03aae4,427yw3s,im7v7p,ofbd9ip,46nskug,p2yhnzn,ofaqrjz".split(",")[l - 25], 36
         )
-      
-      )
-      
-      /2**(z*(y-u)+(x-t))&1
+      ) / 2 ** (z * (y - t + 2) + (x - t)) & 1
     )
-  ) * ((l<25)+1)
+  ) * (f + 1)
 };
   
 // Check solution
-w=s.every(w=p=>!m(p))
+w = s.every(p => !m(p))
 
-// Win
-&&setTimeout("w=n=0;d(++l)",500);
+// Win (setTimeout("d(++l,w=n=0)",500)
+&& setTimeout`d(++l ${500} w = n = 0)`
 
 // Draw scene
-for(B=i="";i<176;i++)
-b.innerHTML=B+=`<a style=width:3ch;height:3ch;float:left;background:#${
-s.includes(i)?w?"0d0":"da6":[111,,"09c"][m(i)]}>${i-p?"":"👀"}`
-
+for(B = i = ""; i < 176; i++)
+b.innerHTML = B += `<a style=width:3ch;height:3ch;float:left;background:#${s.includes(i) ? w ? 161 : "da6" : [111, , 777][m(i)]}>${i - p ? "" : "👀"}`
 }
-
 };
 
 // Reset inbounds flag & start
-d(w=l=n=0);
+d(w = l = n = 0);
 </script>
