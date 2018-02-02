@@ -1,88 +1,198 @@
-﻿<body style=width:48ch id=b>
+﻿<body id=b>
 <script>
+
+// MiniLOSSST
+// ==========
+
+// The game is rendered on a grid of 16 x 11 squares.
+// The squares are <a> elements measuring 3ch x 3ch and floating to the left.
+// The size "3ch" (24px) was chosen because it is a good size to contain the emoji eyes at their default size.
+// We used <a> elements because they can't contain other <a>'s, so "<a><a><a>..." produces consecutive blocks.
+// The body's width is set to 48ch, to wrap after each line of 16 squares.
+
+b.style.width = "48ch";
+
+// The game contains 25 "nowrap" puzzles plus 30 "wrap" puzzles, counted with the variable l.
+// The function d is called on load and at every keydown event. It updates and redraws the scene.
 onkeydown = d = e => {
 
-// Don't move when the snake is green
-if(!w){
+  // Don't move during the win animation (when w == 1).
+  if(!w){
 
-// Type of puzzle: wrap = 0 / nowrap = 1
-f = l < 25;
+  // f: type of puzzle (nowrap: 1 / wrap = 0).
+  f = l < 25;
 
-// Puzzle size (non-wrap: 25*4, wrap: 7,5,7,6,6,12*5,6*6,0)
-z = l < 25 ? 4 : l < 30 ? +"75766" [l - 25] : l < 43 ? 5 : l < 50 ? 6 : 0;
+  // z: puzzle size (nowrap: 4 / wrap: 7,5,7,6,6,5 (12 times), 6 (6 times) and 0).
+  z = l < 25 ? 4 : "7576665555555555556666660"[l - 25]
 
-// Read keyCode
-k = e.which % 36;
+  // k: e.keyCode (a.k.a. e.which) modulo 36.
+  k = e.which % 36;
 
-// Shift to skip a level
-k == 16 && d(++l, w = n = 0)
+  // Press shift (k = 16) to skip a level.
+  // Also, reset the win flag (w) and the inbounds flag (n) to 0.
+  // Note: the value passed to d is 0.
+  k == 16 && d(++l, w = n = 0)
 
-// Move / reset snake
-k < 5 ?
-(  
-  // Target square
-  q = p +[, -1, -16, 1, 16][k],
-  
-  // Wrap for puzzles 24 to 49 if the snake head is already inbounds
-  q += !f && n && m(q) > 1 ? [, z, 16 * z, -z, -16 * z][k] : 0,
-  
-  // Go inbounds
-  m(q) < 2 && (n = 1),
-  
-  // Move snake if no collision 
-  s.includes(q) || (s = [p = q, ...s]) 
-)
+  // If k < 5, it means that the left (k == 1), top (k == 2), right (k == 3) or bottom (k == 4) key is pressed.
+  // Special case: if k == 0, it means that we passed to the next level, so nothing must be done.
+  k < 5 ?
+  (  
+    // q: target cell (-1: left / -16: top / 1: right / 16: bottom).
+    // The array has no value at index 0 to avoid moving when d(0) is called.
+    q = p + [, -1, -16, 1, 16][k],
+    
+    // Apply wrap for puzzles > 24 (f = 0) if the snake head is inbounds (n = 1) and the target is an exterior cell (m(q) == 2):
+    // k == 1: add z to q to wrap from left to right.
+    // k == 2: add 16 * z to q to wrap from top to bottom.
+    // k == 3: add -z to q to wrap from right to left.
+    // k == 4: add -16 * z to q to wrap from bottom to top.
+    // Here again, the array has no value at index 0 to avoid moving when d(0) is called.
+    q += !f && n && m(q) > 1 ? [, z, 16 * z, -z, -16 * z][k] : 0,
+    
+    // The function m returns the color of the cell p passed in parameter.
+    // 0: black pattern / 1: puzzle area / 2: exterior.
+    m = p => {
+      
+      // Compute cell coordinates (x, y) based on p.
+      x = p % 16;
+      y = p >> 4; // p >> 4 == Math.floor(p / 16)
+      
+      // t: distance from the center of the scene (we use it to keep the puzzle centered)
+      t = 8 - z / 2 | 0
+      
+      return 
+      
+      // Test if the cell is inside the centered puzzle
+      x < t || x > t + z - 1 || y < t - 2 || y > t + z - (f ? 1 : 3)
+      
+      // Return 2 if the cell is outside
+      ? 2
+      
+      // Each part of this string represents a level encoded in base36.
+      :
+      
+      !(
+      
+        parseInt(
+          '19r,\
+          yn,\
+          2nn,\
+          on,\
+          sc,\
+          2yc,\
+          1aer,\
+          3ddj,\
+          34v,\
+          7pb,\
+          327,\
+          m48,\
+          1egj,\
+          ab87,\
+          4var,\
+          44cc,\
+          4v9z,\
+          5lye,\
+          cdfb,\
+          cn3c,\
+          1am6,\
+          gtjz,\
+          9tuf,\
+          4wz2,\
+          b7cj,\
+          1hrdfddq8y,\
+          g3t6b,\
+          2tc09uicht,\
+          1ibkfyb,\
+          pesw8s3,\
+          16nz5,\
+          9jorj,\
+          j7r6m,\
+          jio5o,\
+          fv5kd,\
+          jokrj,\
+          jdyrj,\
+          b2lvj,\
+          b1asx,\
+          jopxb,\
+          9luxq,\
+          d8473,\
+          jnejl,\
+          jrkbh,\
+          e03aae4,\
+          427yw3s,\
+          im7v7p,\
+          ofbd9ip,\
+          46nskug,\
+          p2yhnzn,\
+          ofaqrjz,\
+          1v4x23l,\
+          v7krrlr,\
+          uq3x8jj'
+          .split(",")[l],
+          
+          36
+        )
+      
+        // The current level is converted in base 10, then each bit of its base2 value is extracted using the following computation.
+        // Considering N is the number where the puzzle is encoded, and X & Y the coordinates inside the puzzle,
+        // extracting the bit Y * Z + X of the number N is equivalent to: N / ( 2 ** (z * Y + X) & 1 ).
+        / 2 ** (z * (y - t + 2) + (x - t)) & 1
+        
+        // We multiply this bit by 2 for levels < 25 and 1 for levels > 25,
+        // so the non-pattern cells can look different on nowrap puzzles (m(p) = 1) and wrap puzzles (m(p) = 2). 
+      ) * (f + 1)
+    };
+    
+    // Set inbounds flag (n) to 1 if the target cell (m(q)) is 0 or 1.
+    m(q) < 2 && (n = 1),
+    
+    // Move snake:
+    // - if s (the array representing the snake) contains q, it's a collision and nothing happens.
+    // - if s doesn't contain q, the new head position (q) is appended at the beginning of s and saved in p.
+    s.includes(q) || (s = [p = q, ...s]) 
+  )
 
-
-// Other keys: reset
-:(n = 0, s = [p = 81, 80])
-
-// Truncate snake (non-wrap: 6*8, 6*11, 9*13, 6*15; wrap: 5*14, 13*15, 4*20, 3*20
-s.length=l < 6 ? 8 : l < 12 ? 11 : l < 21 ? 13 : f ? 15 : l < 30 ? 14 : l < 43 ? 15 : l < 47 ? 16 : 20
-
-// Color of the current cell (0:pattern / 1:wrap area (for puzzles 25-49) / 2:exterior)
-m = p => {
-  
-  // Compute cell coordinates
-  x = p % 16;
-  y = p >> 4;
-  
-  // Compute distance from center based on the size of the current puzzle
-  t = 8 - z / 2 | 0
-  
-  // Return 0/1/2 according to x, y, f and l
-  return x < t || x > t + z - 1 || y < t - 2 || y > t + z - (f ? 1 : 3)
-  
-  ? 2
-  
+  // Else, it means that any other key was pressed
   :
   
-  (
-    1 - 
-    (
-      (
-        f
-        ? [..."ٯӟ൳ͷϼ໴𦙷࿟⛿ཿ濸ｳ񵝗𷝳𮻼𷝗𿹦򌻷򏿨򿦟񯽗𷿮񿧳"][l].codePointAt()
-        : parseInt(
-          "1hrdfddq8y,g3t6b,2tc09uicht,1ibkfyb,pesw8s3,9jorj,j7r6m,jio5o,fv5kd,jokrj,jdyrj,b2lvj,b1asx,jopxb,9luxq,d8473,jnejl,jrkbh,e03aae4,427yw3s,im7v7p,ofbd9ip,46nskug,p2yhnzn,ofaqrjz".split(",")[l - 25], 36
-        )
-      ) / 2 ** (z * (y - t + 2) + (x - t)) & 1
-    )
-  ) * (f + 1)
-};
+  // Reset current level: reset inbounds flag (n) to 0 and snake positions (s) to cells 81 and 80.
+  // also, save head position (p = 81)?
+  (n = 0, s = [p = 81, 80])
+
+  // Truncate the snake at its max size (nowrap: 8 / 11 / 13 / 15, wrap: 14 / 15 / 16 / 20 / 22)
+  s.length = l < 6 ? 8 : l < 12 ? 11 : l < 21 ? 13 : f ? 15 : l < 31 ? 14 : l < 44 ? 15 : l < 48 ? 16 : l < 52 ? 20 : 22
+ 
+  // w: true if all the parts (p) of the snake (s) are on a black cell (m(p) == 0)
+  w = s.every(p => !m(p)) && 
   
-// Check solution
-w = s.every(p => !m(p))
+  // If the puzzle is solved, wait 500ms to increase level (l), reset win (w) and inbounds (n) flags, and draw the next puzzle.
+  // This code is equivalent to : `setTimeout("d(++l, w = n = 0)", 500)`.
+  setTimeout`d(++l ${500} w = n = 0)`
 
-// Win (setTimeout("d(++l,w=n=0)",500)
-&& setTimeout`d(++l ${500} w = n = 0)`
-
-// Draw scene
-for(B = i = ""; i < 176; i++)
-b.innerHTML = B += `<a style=width:3ch;height:3ch;float:left;background:#${s.includes(i) ? w ? 161 : "da6" : [111, , 777][m(i)]}>${i - p ? "" : "👀"}`
-}
+  // Draw the scene
+  // Reset the string `B` containing the body's innerHTML, and `i` (the cell counter),
+  // then loop on all the cells of the scene.
+  for(B = i = ""; i < 176; i++)
+  
+    // Update `B` and b.innerHTML with the previous value of `B` plus a new <a> element.
+    // This element measures 3ch x 3ch, floats left,and has a background set to:
+    // #161 (green) if the cell belongs to the snake (s.includes(i)) and the puzzle is won (w == 1).
+    // #DA6 (tan) if the cell belongs to the snake and the puzzle is not won yet.
+    // #111 (black) if the cell belongs to the pattern of the puzzle. (m(i) == 0).
+    // #0 if the cell belongs to the non-wrap area around the pattern (m(i) == 1).
+    // (#0 is an invalid value for a CSS background, so the cell stays white)
+    // #777 (light gray) if the cell belongs to the wrap area around the pattern (m(i) == 2).
+    b.innerHTML = B += 
+    `<a style=width:3ch;height:3ch;float:left;background:#${
+      s.includes(i) ? w ? 161 : "da6" : [111, , 777][m(i)]
+    }>${
+      i - p
+      ? ""
+      : "👀"
+    }`
+  }
 };
 
-// Reset inbounds flag & start
+// Reset win flag (w), level number (l) and inbounds flag (n) to 0 and start the game.
 d(w = l = n = 0);
 </script>

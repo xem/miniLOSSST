@@ -1,7 +1,7 @@
 MiniLOSSST
 ===
 
-A super tiny demake of [LOSSST](http://js13kgames.com/entries/lossst) (my js13kgames 2017 entry)
+A super tiny demake of [LOSSST](http://js13kgames.com/entries/lossst) (my js13kgames 2017 entry) submitted to JS1K 2018
 
 Golfed by [xem](https://twitter.com/MaximeEuziere), [xen](https://twitter.com/Xen_the), xaotic, [veubeke](https://twitter.com/I_like_too_much), [corruptio](https://twitter.com/justecorruptio), [subzey](https://twitter.com/subzey) & [p01](https://twitter.com/p01) <3
 
@@ -11,24 +11,17 @@ Goal: try to match the black patterns.
 
 Controls: arrow keys to move / R to reset.
 
-Demos
+Play:
 ===
 
-- 2D puzzles (527b): http://xem.github.io/miniLOSSST
+- Minified (< 1kb): http://xem.github.io/miniLOSSST/all.html
+- Commented : http://xem.github.io/miniLOSSST/all-commented.html
 
-- 2D puzzles with wrap (786b): http://xem.github.io/miniLOSSST/wrap.html
 
-Commented source code
-=====================
-
-- 2D: https://github.com/xem/miniLOSSST/blob/gh-pages/commented.html
-
-- 2D with wrap: https://github.com/xem/miniLOSSST/blob/gh-pages/wrap-commented.html
-
-Other versions:
+Bonus:
 ===
 
-- 2D puzzles (rendered in ASCII, 436b, by p01): http://xem.github.io/miniLOSSST/ascii.html
+- Demake of the demake (rendered in ASCII, 436b, by p01): http://xem.github.io/miniLOSSST/ascii.html
 
 
 Our other code golfed projects
