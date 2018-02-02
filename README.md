@@ -14,8 +14,8 @@ Controls: arrow keys to move / R to reset.
 Play:
 ===
 
-- Minified (< 1kb): http://xem.github.io/miniLOSSST/all.html
-- Commented : http://xem.github.io/miniLOSSST/all-commented.html
+- Minified (1kb): http://xem.github.io/miniLOSSST/all.html
+- Commented source code: https://github.com/xem/miniLOSSST/blob/gh-pages/all-commented.html
 
 
 Bonus:
